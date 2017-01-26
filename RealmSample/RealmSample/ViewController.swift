@@ -38,18 +38,38 @@ class ViewController: UIViewController {
             realm.add(realmModel)
         }
         showDataLabel.text = "新增\(realmModel.id)與\(realmModel.title)"
+        
+        
+        //MARK: 新增多筆資料採用begin-commit
+//        realm.beginWrite()
+//        for (index,element) in tempID.enumerated() {
+              //MARK: 注意為類別型態資料，共用記憶體
+//            let houseInfoRealm = HouseInfoRealm()
+//            realmModel.id = inputText.text
+//            realmModel.title = titleText.text
+//            try! realm.write {
+//            //新增資料
+//                realm.add(houseInfoRealm)
+//            }
+//        }
+//        
+//        do {
+//            try realm.commitWrite()
+//        } catch let e {
+//            print(e)
+//        }
+        
+        
     }
     
     
     //搜尋資料
     @IBAction func showData(_ sender: AnyObject) {
-        
         let realm = try! Realm()
         
         //MARK: 搜尋條件資料
         let predicate = NSPredicate(format: "id = %@ OR title BEGINSWITH %@", inputText.text!, titleText.text!)
-        let datas = realm.objects(RealmModel.self).filter(predicate)
-        
+//        let datas = realm.objects(RealmModel.self).filter(predicate)
         
         //MARK: 全部資料
         let allDatas = realm.objects(RealmModel.self)
@@ -65,10 +85,10 @@ class ViewController: UIViewController {
         showDataLabel.text = strs
     }
     
+    
 
     //MARK: 刪除資料
     @IBAction func deleteData(_ sender: AnyObject) {
-        
         let realm = try! Realm()
         try! realm.write {
             //刪除全部
